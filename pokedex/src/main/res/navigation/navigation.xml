@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/pokedexFragment">
+
+    <fragment
+        android:id="@+id/pokedexFragment"
+        android:name="br.com.accenture.pokedex.view.fragments.PokedexFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_pokedex" >
+        <action
+            android:id="@+id/from_pokedexFragment_to_pokemonFragment"
+            app:destination="@id/pokemonFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pokemonFragment"
+        android:name="br.com.accenture.pokedex.view.fragments.PokemonFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_pokemon" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/from_pokemonFragment_to_pokedexFragment"
+            app:destination="@id/pokedexFragment" />
+    </fragment>
+
+</navigation>
