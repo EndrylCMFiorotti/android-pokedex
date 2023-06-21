@@ -5,4 +5,8 @@
     <string name="label_power">Power</string>
     <string name="label_damage">Damage</string>
     <string name="button_close">Close</string>
+    <string name="button_send">Send</string>
+    <string name="auto_complete">Pokemon Name</string>
+    <string name="not_found">Pokemon not found</string>
+    <string name="not_found_content">Wanted Pokemon was not found</string>
 </resources>

@@ -26,6 +26,9 @@
         <action
             android:id="@+id/from_pokemonFragment_to_pokedexFragment"
             app:destination="@id/pokedexFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
     </fragment>
 
 </navigation>

@@ -1,4 +1,4 @@
-package br.com.accenture.pokedex.model.pokemon
+package br.com.accenture.pokedex.network.responses
 
 import br.com.accenture.pokedex.model.pokemon.pokemonImage.PokemonImage
 import br.com.accenture.pokedex.model.pokemon.pokemonMove.PokemonMove

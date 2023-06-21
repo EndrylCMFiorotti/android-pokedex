@@ -1,6 +1,6 @@
 package br.com.accenture.pokedex.api
 
-import br.com.accenture.pokedex.model.pokedex.PokedexResponse
+import br.com.accenture.pokedex.network.responses.PokedexResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

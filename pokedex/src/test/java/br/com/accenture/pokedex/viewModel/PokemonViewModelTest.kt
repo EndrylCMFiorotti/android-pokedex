@@ -3,7 +3,7 @@ package br.com.accenture.pokedex.viewModel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.com.accenture.pokedex.api.PokemonEndpoint
-import br.com.accenture.pokedex.model.pokemon.PokemonResponse
+import br.com.accenture.pokedex.network.responses.PokemonResponse
 import br.com.accenture.pokedex.model.pokemon.pokemonImage.Image
 import br.com.accenture.pokedex.model.pokemon.pokemonImage.ImageUrl
 import br.com.accenture.pokedex.model.pokemon.pokemonImage.PokemonImage

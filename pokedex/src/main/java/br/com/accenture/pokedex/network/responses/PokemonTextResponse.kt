@@ -1,5 +1,6 @@
-package br.com.accenture.pokedex.model.pokemon.pokemonFlavorText
+package br.com.accenture.pokedex.network.responses
 
+import br.com.accenture.pokedex.model.pokemon.pokemonFlavorText.PokemonText
 import br.com.accenture.pokedex.model.presentation.PokemonTextPresentation
 import com.google.gson.annotations.SerializedName
 

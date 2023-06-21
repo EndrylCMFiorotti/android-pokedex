@@ -12,11 +12,13 @@ import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.accenture.pokedex.adapter.MoveListAdapter
 import br.com.accenture.pokedex.databinding.CustomDialogBinding
 import br.com.accenture.pokedex.databinding.DataPokemonBinding
+import br.com.accenture.pokedex.databinding.ErrorDialogBinding
 import br.com.accenture.pokedex.databinding.FragmentPokemonBinding
 import br.com.accenture.pokedex.model.presentation.PokemonAbilityPresentation
 import br.com.accenture.pokedex.model.presentation.PokemonPresentation
@@ -24,10 +26,13 @@ import br.com.accenture.pokedex.utils.ColorType
 import br.com.accenture.pokedex.viewModel.PokemonViewModel
 import coil.load
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class PokemonFragment : Fragment() {
     private lateinit var binding: FragmentPokemonBinding
     private lateinit var dialogBinding: CustomDialogBinding
+    private lateinit var errorDialogBinding: ErrorDialogBinding
     private lateinit var dialog: Dialog
     private val viewModel: PokemonViewModel by viewModel()
     private val args: PokemonFragmentArgs by navArgs()
@@ -42,14 +47,26 @@ class PokemonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
-        viewModel.getPokemon(args.id)
-        setLoading()
+        sendRequest()
     }
 
-    private fun setLoading() {
+    private fun sendRequest() {
+        viewModel.getPokemon(args.name.ifEmpty { args.id }.toString())
+        startLoading()
+    }
+
+    private fun startLoading() {
         with(binding) {
             dataView.isVisible = false
             shimmerView.startShimmer()
+        }
+    }
+
+    private fun stopLoading() {
+        with(binding) {
+            dataView.isVisible = true
+            shimmerView.isVisible = false
+            shimmerView.stopShimmer()
         }
     }
 
@@ -58,9 +75,12 @@ class PokemonFragment : Fragment() {
             pokemon.observe(viewLifecycleOwner) {
                 displayPokemon(it)
             }
+            notFound.observe(viewLifecycleOwner) {
+                configDialogError()
+            }
             pokemonDescription.observe(viewLifecycleOwner) {
                 displayPokemonDescription(it)
-                setDataLayout()
+                stopLoading()
             }
             setSecondTypeInvisible.observe(viewLifecycleOwner) {
                 setVisibilitySecondType()
@@ -72,20 +92,24 @@ class PokemonFragment : Fragment() {
         }
     }
 
-    private fun displayDialogContent(it: PokemonAbilityPresentation) {
-        dialogBinding.tvDescription.text = it.description
-        dialogBinding.tvType.text = it.type
-        dialogBinding.tvPower.text = it.power.toString()
-        dialogBinding.tvDamage.text = it.damage
-        dialogBinding.btClose.setOnClickListener { dialog.dismiss() }
+
+    private fun configDialogError() {
+        errorDialogBinding = ErrorDialogBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog = Dialog(requireContext()).apply {
+            setContentView(errorDialogBinding.root)
+            setCancelable(true)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
+        }
+        Executors.newSingleThreadScheduledExecutor().schedule({
+            dialog.dismiss()
+            redirect()
+        }, 2, TimeUnit.SECONDS)
     }
 
-    private fun setDataLayout() {
-        with(binding) {
-            dataView.isVisible = true
-            shimmerView.isVisible = false
-            shimmerView.stopShimmer()
-        }
+    private fun redirect() {
+        val action = PokemonFragmentDirections.fromPokemonFragmentToPokedexFragment()
+        findNavController().navigate(action)
     }
 
     private fun displayPokemon(pokemon: PokemonPresentation) {
@@ -125,6 +149,14 @@ class PokemonFragment : Fragment() {
         }
         dialogBinding.tvNameAbility.text = it
         visibilityLoading(View.INVISIBLE, View.VISIBLE)
+    }
+
+    private fun displayDialogContent(it: PokemonAbilityPresentation) {
+        dialogBinding.tvDescription.text = it.description
+        dialogBinding.tvType.text = it.type
+        dialogBinding.tvPower.text = it.power.toString()
+        dialogBinding.tvDamage.text = it.damage
+        dialogBinding.btClose.setOnClickListener { dialog.dismiss() }
     }
 
     private fun visibilityLoading(data: Int, loading: Int) {

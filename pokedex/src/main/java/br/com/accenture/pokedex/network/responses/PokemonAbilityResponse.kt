@@ -1,5 +1,8 @@
-package br.com.accenture.pokedex.model.pokemon.pokemonMove.pokemonAbility
+package br.com.accenture.pokedex.network.responses
 
+import br.com.accenture.pokedex.model.pokemon.pokemonMove.pokemonAbility.AbilityDamage
+import br.com.accenture.pokedex.model.pokemon.pokemonMove.pokemonAbility.AbilityDescription
+import br.com.accenture.pokedex.model.pokemon.pokemonMove.pokemonAbility.AbilityType
 import br.com.accenture.pokedex.model.presentation.PokemonAbilityPresentation
 import com.google.gson.annotations.SerializedName
 

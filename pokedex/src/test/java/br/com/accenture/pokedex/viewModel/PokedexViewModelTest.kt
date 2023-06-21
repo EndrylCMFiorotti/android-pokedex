@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.com.accenture.pokedex.api.PokedexEndpoint
 import br.com.accenture.pokedex.model.pokedex.PokedexEntries
-import br.com.accenture.pokedex.model.pokedex.PokedexResponse
+import br.com.accenture.pokedex.network.responses.PokedexResponse
 import br.com.accenture.pokedex.model.pokedex.PokedexSpecies
 import br.com.accenture.pokedex.model.presentation.PokedexPresentation
 import br.com.accenture.pokedex.repository.PokedexRepository
