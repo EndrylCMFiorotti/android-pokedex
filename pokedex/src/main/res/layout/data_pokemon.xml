@@ -25,22 +25,35 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/pokemon_image"
                 android:scaleType="center"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout_types"
+                app:layout_constraintBottom_toTopOf="@+id/textView_name_pokemon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout_types"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView_name_pokemon"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal_margin"
-                android:gravity="center"
-                app:layout_constraintBottom_toTopOf="@+id/textView_name_pokemon"
+                android:layout_margin="@dimen/normal_margin"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout_types"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_pokemon">
+                app:layout_constraintTop_toBottomOf="@+id/imageView_pokemon"
+                tools:ignore="TextContrastCheck"
+                tools:text="Name" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout_types"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/textView_name_pokemon"
+                app:layout_constraintTop_toBottomOf="@+id/textView_name_pokemon">
 
                 <TextView
                     android:id="@+id/textView_type_1"
@@ -48,7 +61,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
-                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normal_size"
                     tools:text="Type 1" />
 
                 <TextView
@@ -57,58 +71,50 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:gravity="center"
-                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normal_size"
                     tools:text="Type 2" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView_name_pokemon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_margin"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView_height_pokemon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout_types"
-                tools:ignore="TextContrastCheck"
-                tools:text="Name" />
-
-            <TextView
                 android:id="@+id/textView_height_pokemon"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_margin"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView_weight_pokemon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_name_pokemon"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/normal_size"
+                app:layout_constraintBottom_toTopOf="@+id/textView_description"
+                app:layout_constraintEnd_toStartOf="@id/textView_weight_pokemon"
+                app:layout_constraintStart_toStartOf="@id/textView_name_pokemon"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout_types"
                 tools:text="Height" />
 
             <TextView
                 android:id="@+id/textView_weight_pokemon"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_margin"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_height_pokemon"
+                android:layout_marginLeft="@dimen/normal_size"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/normal_size"
+                app:layout_constraintBottom_toTopOf="@id/textView_description"
+                app:layout_constraintStart_toEndOf="@+id/textView_height_pokemon"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout_types"
                 tools:text="Weight" />
 
             <TextView
                 android:id="@+id/textView_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal_margin"
-                android:gravity="center"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:textColor="?attr/colorPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerView_moves"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_weight_pokemon"
+                app:layout_constraintStart_toStartOf="@+id/textView_name_pokemon"
+                app:layout_constraintTop_toBottomOf="@+id/textView_height_pokemon"
                 tools:text="Description Pokemon" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -118,9 +124,9 @@
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_description"
                 tools:listitem="@layout/item_list" />

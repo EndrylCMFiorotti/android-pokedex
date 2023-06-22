@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import br.com.accenture.pokedex.R
 import br.com.accenture.pokedex.adapter.PokedexListAdapter
 import br.com.accenture.pokedex.databinding.FragmentPokedexBinding
 import br.com.accenture.pokedex.model.presentation.PokedexPresentation
@@ -28,9 +30,18 @@ class PokedexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
-        startLoading()
-        viewModel.getPokemonListToPokedex()
+        sendRequest()
         onClickSearch()
+        setUpToolbar()
+    }
+
+    private fun setUpToolbar() {
+        binding.tbPokedex.toolbar.title = "pokedex"
+    }
+
+    private fun sendRequest() {
+        viewModel.getPokemonListToPokedex()
+        startLoading()
     }
 
     private fun setUpObservers() {

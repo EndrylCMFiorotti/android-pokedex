@@ -48,6 +48,11 @@ class PokemonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
         sendRequest()
+        setUpToolbar("pokemon")
+    }
+
+    private fun setUpToolbar(name: String) {
+        binding.tbPokemon.toolbar.title = name
     }
 
     private fun sendRequest() {
@@ -118,6 +123,7 @@ class PokemonFragment : Fragment() {
     private fun displayPokemon(pokemon: PokemonPresentation) {
         with(binding.includeData) {
             with(pokemon) {
+                setUpToolbar(name)
                 imageViewPokemon.load(image)
                 textViewNamePokemon.text = name
                 textViewHeightPokemon.text = HtmlCompat.fromHtml(
@@ -192,8 +198,8 @@ class PokemonFragment : Fragment() {
     }
 
     companion object {
-        private const val LEFT_PADDING = 32
-        private const val RIGHT_PADDING = 32
+        private const val LEFT_PADDING = 64
+        private const val RIGHT_PADDING = 64
         private const val TOP_PADDING = 16
         private const val BOTTOM_PADDING = 16
         private const val BORDER_RADIUS = 64F
