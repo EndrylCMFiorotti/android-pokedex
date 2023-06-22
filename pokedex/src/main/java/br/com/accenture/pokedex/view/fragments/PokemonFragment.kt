@@ -82,6 +82,10 @@ class PokemonFragment : Fragment() {
                 displayPokemonDescription(it)
                 stopLoading()
             }
+            pokemonDescriptionEmpty.observe(viewLifecycleOwner) {
+                binding.includeData.textViewDescription.isVisible = false
+                stopLoading()
+            }
             setSecondTypeInvisible.observe(viewLifecycleOwner) {
                 setVisibilitySecondType()
             }
@@ -91,7 +95,6 @@ class PokemonFragment : Fragment() {
             }
         }
     }
-
 
     private fun configDialogError() {
         errorDialogBinding = ErrorDialogBinding.inflate(LayoutInflater.from(requireContext()))
