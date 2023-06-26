@@ -9,4 +9,26 @@
     <string name="auto_complete">Pokemon Name</string>
     <string name="not_found">Pokemon not found</string>
     <string name="not_found_content">Wanted Pokemon was not found</string>
+    <string name="select_region">Select Region</string>
+
+    <array name="list_regions">
+        <item>Kanto</item>
+        <item>Original-Johto</item>
+        <item>Updated-Johto</item>
+        <item>Hoenn</item>
+        <item>Updated-Hoenn</item>
+        <item>Original-Sinnoh</item>
+        <item>Extended-Sinnoh</item>
+        <item>Original-Unova</item>
+        <item>Updated-Unova</item>
+        <item>Kalos-Central</item>
+        <item>Kalos-Coastal</item>
+        <item>Kalos-Mountain</item>
+        <item>Original-Alola</item>
+        <item>Updated-Alola</item>
+        <item>Original-Melemele</item>
+        <item>Original-Akala</item>
+        <item>Original-Ulaula</item>
+        <item>Original-Poni</item>
+    </array>
 </resources>

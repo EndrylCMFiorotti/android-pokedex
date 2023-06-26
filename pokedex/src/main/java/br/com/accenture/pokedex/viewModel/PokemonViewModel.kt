@@ -49,11 +49,11 @@ class PokemonViewModel(
     private suspend fun pokemonRequestSuccess(pokemon: PokemonPresentation) {
         _pokemon.postValue(pokemon)
         if (pokemon.types.secondType.isEmpty()) _setSecondTypeInvisible.postValue(true)
-        getDescription(pokemon.id)
+        getDescription(pokemon.name)
     }
 
-    private suspend fun getDescription(id: Int) {
-        when (val response = repository.getPokemonText(id.toString())) {
+    private suspend fun getDescription(name: String) {
+        when (val response = repository.getPokemonText(name)) {
             is ResultWrapper.Success -> {
                 when {
                     response.content.descriptions.isEmpty() -> _pokemonDescriptionEmpty.postValue(

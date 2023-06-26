@@ -56,7 +56,7 @@ class PokemonFragment : Fragment() {
     }
 
     private fun sendRequest() {
-        viewModel.getPokemon(args.name.ifEmpty { args.id }.toString())
+        viewModel.getPokemon(args.name)
         startLoading()
     }
 

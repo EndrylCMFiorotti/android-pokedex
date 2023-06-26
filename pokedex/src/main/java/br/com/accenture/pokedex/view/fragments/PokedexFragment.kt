@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.accenture.pokedex.R
@@ -20,6 +20,11 @@ class PokedexFragment : Fragment() {
     private lateinit var binding: FragmentPokedexBinding
     private val viewModel: PokedexViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getPokemonListToPokedex(REGION)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -29,26 +34,35 @@ class PokedexFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpObservers()
-        sendRequest()
-        onClickSearch()
+
         setUpToolbar()
+        onClickSearch()
+        configAutoCompleteRegion()
+        setUpObservers()
+
+        sendRequestRegion()
+    }
+
+    private fun sendRequestRegion() {
+        binding.acRegion.addTextChangedListener {
+            viewModel.getPokemonListToPokedex(
+                it.toString().lowercase().ifEmpty {
+                    return@addTextChangedListener
+                }
+            )
+            startLoading()
+        }
     }
 
     private fun setUpToolbar() {
         binding.tbPokedex.toolbar.title = "pokedex"
     }
 
-    private fun sendRequest() {
-        viewModel.getPokemonListToPokedex()
-        startLoading()
-    }
-
     private fun setUpObservers() {
         with(viewModel) {
             pokedexList.observe(viewLifecycleOwner) { list ->
                 configPokemonList(list)
-                configAutoComplete(list)
+                configAutoCompleteSearch(list)
                 stopLoading()
             }
             pokedexListEmpty.observe(viewLifecycleOwner) {
@@ -57,12 +71,22 @@ class PokedexFragment : Fragment() {
         }
     }
 
-    private fun configAutoComplete(listPokemonNames: List<PokedexPresentation>) {
+    private fun configAutoCompleteSearch(listPokemonNames: List<PokedexPresentation>) {
         binding.acPokemon.setAdapter(
             ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_list_item_1,
                 listPokemonNames.map { it.name }
+            )
+        )
+    }
+
+    private fun configAutoCompleteRegion() {
+        binding.acRegion.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                R.layout.list_item,
+                resources.getStringArray(R.array.list_regions)
             )
         )
     }
@@ -88,8 +112,7 @@ class PokedexFragment : Fragment() {
     private fun onClickSearch() {
         binding.btSend.setOnClickListener {
             val action = PokedexFragmentDirections.fromPokedexFragmentToPokemonFragment(
-                id = 0,
-                name = binding.acPokemon.text.toString()
+                name = binding.acPokemon.text.toString().ifEmpty { POKEMON }
             )
             findNavController().navigate(action)
         }
@@ -97,9 +120,13 @@ class PokedexFragment : Fragment() {
 
     private fun onClickPokedex(pokedexPresentation: PokedexPresentation) {
         val action = PokedexFragmentDirections.fromPokedexFragmentToPokemonFragment(
-            id = pokedexPresentation.id,
-            name = ""
+            name = pokedexPresentation.name
         )
         findNavController().navigate(action)
+    }
+
+    companion object {
+        private const val REGION = "1"
+        private const val POKEMON = "1"
     }
 }

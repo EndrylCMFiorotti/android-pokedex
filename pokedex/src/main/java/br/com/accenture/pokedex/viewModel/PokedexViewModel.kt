@@ -15,9 +15,9 @@ class PokedexViewModel(private val repository: PokedexRepository) : ViewModel() 
     private var _pokedexListEmpty = MutableLiveData<Boolean>()
     val pokedexListEmpty: LiveData<Boolean> = _pokedexListEmpty
 
-    fun getPokemonListToPokedex() {
+    fun getPokemonListToPokedex(id: String) {
         viewModelScope.launch {
-            repository.getPokedex(REGION).toPokedexPresentation().let {
+            repository.getPokedex(id).toPokedexPresentation().let {
                 if(it.isEmpty()) {
                     _pokedexListEmpty.postValue(true)
                 } else {
@@ -25,9 +25,5 @@ class PokedexViewModel(private val repository: PokedexRepository) : ViewModel() 
                 }
             }
         }
-    }
-
-    companion object {
-        const val REGION = 1
     }
 }

@@ -9,26 +9,32 @@
         android:id="@+id/tb_pokedex"
         layout="@layout/toolbar" />
 
-    <AutoCompleteTextView
-        android:id="@+id/ac_pokemon"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pokemon"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:autofillHints=""
-        android:background="@drawable/bg_item_list"
-        android:completionThreshold="1"
-        android:hint="@string/auto_complete"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/placeholder_gray"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/RecyclerView"
+        android:layout_height="56dp"
+        android:layout_marginStart="@dimen/normal_margin"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_marginBottom="@dimen/normal_margin"
+        app:layout_constraintBottom_toTopOf="@+id/til_region"
         app:layout_constraintEnd_toStartOf="@+id/bt_send"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_pokedex"/>
+        app:layout_constraintTop_toBottomOf="@+id/tb_pokedex">
+
+        <AutoCompleteTextView
+            android:id="@+id/ac_pokemon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:completionThreshold="1"
+            android:hint="@string/auto_complete"
+            android:inputType="text"
+            android:labelFor="@id/til_pokemon"
+            android:paddingLeft="@dimen/normal_padding"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/bt_send"
@@ -39,10 +45,34 @@
         android:background="@drawable/bg_item_list"
         android:contentDescription="@string/button_send"
         android:src="@drawable/img_search"
-        app:layout_constraintBottom_toBottomOf="@+id/ac_pokemon"
+        app:layout_constraintBottom_toBottomOf="@+id/til_pokemon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ac_pokemon"
-        app:layout_constraintTop_toTopOf="@+id/ac_pokemon" />
+        app:layout_constraintStart_toEndOf="@+id/til_pokemon"
+        app:layout_constraintTop_toTopOf="@+id/til_pokemon" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_region"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="@dimen/normal_margin"
+        android:hint="@string/select_region"
+        app:layout_constraintBottom_toTopOf="@id/RecyclerView"
+        app:layout_constraintEnd_toEndOf="@id/bt_send"
+        app:layout_constraintStart_toStartOf="@id/til_pokemon"
+        app:layout_constraintTop_toBottomOf="@id/til_pokemon">
+
+        <AutoCompleteTextView
+            android:id="@+id/ac_region"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="16dp"
+            android:inputType="none"
+            android:labelFor="@id/til_region"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_rv"
@@ -105,7 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ac_pokemon"
+        app:layout_constraintTop_toBottomOf="@+id/til_region"
         tools:listitem="@layout/item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,9 +20,6 @@
         android:name="br.com.accenture.pokedex.view.fragments.PokemonFragment"
         android:label="fragment_second"
         tools:layout="@layout/fragment_pokemon" >
-        <argument
-            android:name="id"
-            app:argType="integer" />
         <action
             android:id="@+id/from_pokemonFragment_to_pokedexFragment"
             app:destination="@id/pokedexFragment" />
