@@ -1,9 +1,11 @@
 package br.com.accenture.pokedex.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -20,11 +22,6 @@ class PokedexFragment : Fragment() {
     private lateinit var binding: FragmentPokedexBinding
     private val viewModel: PokedexViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getPokemonListToPokedex(REGION)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -35,22 +32,31 @@ class PokedexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        startLoading()
         setUpToolbar()
         onClickSearch()
-        configAutoCompleteRegion()
         setUpObservers()
 
+        configSpinnerRegion()
         sendRequestRegion()
     }
 
+    private fun configSpinnerRegion() {
+        binding.spinnerRegion.adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.list_item,
+            resources.getStringArray(R.array.list_regions)
+        )
+    }
+
     private fun sendRequestRegion() {
-        binding.acRegion.addTextChangedListener {
-            viewModel.getPokemonListToPokedex(
-                it.toString().lowercase().ifEmpty {
-                    return@addTextChangedListener
-                }
-            )
-            startLoading()
+        binding.spinnerRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?,view: View?, position: Int, id: Long) {
+                viewModel.getPokemonListToPokedex(parent!!.getItemAtPosition(position).toString().lowercase())
+                startLoading()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
@@ -77,16 +83,6 @@ class PokedexFragment : Fragment() {
                 requireContext(),
                 android.R.layout.simple_list_item_1,
                 listPokemonNames.map { it.name }
-            )
-        )
-    }
-
-    private fun configAutoCompleteRegion() {
-        binding.acRegion.setAdapter(
-            ArrayAdapter(
-                requireContext(),
-                R.layout.list_item,
-                resources.getStringArray(R.array.list_regions)
             )
         )
     }
@@ -126,7 +122,6 @@ class PokedexFragment : Fragment() {
     }
 
     companion object {
-        private const val REGION = "1"
         private const val POKEMON = "1"
     }
 }

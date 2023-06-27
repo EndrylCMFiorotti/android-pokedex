@@ -13,11 +13,11 @@
         android:id="@+id/til_pokemon"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="64dp"
         android:layout_marginStart="@dimen/normal_margin"
         android:layout_marginTop="@dimen/normal_margin"
         android:layout_marginBottom="@dimen/normal_margin"
-        app:layout_constraintBottom_toTopOf="@+id/til_region"
+        app:layout_constraintBottom_toTopOf="@+id/cv_spinner_region"
         app:layout_constraintEnd_toStartOf="@+id/bt_send"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tb_pokedex">
@@ -50,29 +50,26 @@
         app:layout_constraintStart_toEndOf="@+id/til_pokemon"
         app:layout_constraintTop_toTopOf="@+id/til_pokemon" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_region"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <FrameLayout
+        android:id="@+id/cv_spinner_region"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginBottom="@dimen/normal_margin"
-        android:hint="@string/select_region"
+        android:background="@drawable/bg_input"
         app:layout_constraintBottom_toTopOf="@id/RecyclerView"
         app:layout_constraintEnd_toEndOf="@id/bt_send"
         app:layout_constraintStart_toStartOf="@id/til_pokemon"
         app:layout_constraintTop_toBottomOf="@id/til_pokemon">
 
-        <AutoCompleteTextView
-            android:id="@+id/ac_region"
+        <Spinner
+            android:id="@+id/spinner_region"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="16dp"
-            android:inputType="none"
-            android:labelFor="@id/til_region"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_height="56dp"
+            android:layout_marginBottom="@dimen/normal_margin"
+            android:dropDownVerticalOffset="80dp"
+            android:spinnerMode="dropdown" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </FrameLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_rv"
@@ -135,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_region"
+        app:layout_constraintTop_toBottomOf="@+id/cv_spinner_region"
         tools:listitem="@layout/item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

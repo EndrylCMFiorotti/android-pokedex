@@ -12,6 +12,7 @@
     <string name="select_region">Select Region</string>
 
     <array name="list_regions">
+        <item>National</item>
         <item>Kanto</item>
         <item>Original-Johto</item>
         <item>Updated-Johto</item>
