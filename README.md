@@ -1,4 +1,4 @@
-# Foobar
+# Android Pokedex
 
 Project created to implement and understand modularization issues with internal libraries, fragments, navigation, request, dropdown and Skeleton Loaders.
 
